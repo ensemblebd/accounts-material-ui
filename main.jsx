@@ -1,5 +1,5 @@
 import React from 'react';
-import {Accounts, STATES} from './fix.js'; // TODO: back to normal once std:accounts-ui is fixed
+import {Accounts, STATES, FormMessages} from 'meteor/std:accounts-ui';
 import {RaisedButton, FlatButton, FontIcon, TextField, Divider, Snackbar} from 'material-ui';
 import {socialButtonsColors, socialButtonIcons} from './social_buttons_config';
 import {green500, red500, yellow600, lightBlue600} from 'material-ui/styles/colors';
@@ -16,6 +16,10 @@ import {green500, red500, yellow600, lightBlue600} from 'material-ui/styles/colo
 class LoginForm extends Accounts.ui.LoginForm {
   componentWillMount() {
     // FIXME hack to solve issue #18
+  }
+  componentWillUnmount() {
+  	  // override, the default calls upon ReactMeteorData , which results in a null ref to this._meteorDataManager
+	  // boy that was tricky to find.
   }
 }
 
@@ -98,7 +102,7 @@ class Button extends Accounts.ui.Button {
 					disabled={disabled}
 					style={{marginRight: '5px'}}
 					/>
-			)
+			);
 	}
 }
 class Fields extends Accounts.ui.Fields {
@@ -127,28 +131,36 @@ class Field extends Accounts.ui.Field {
 			onChange,
 			required = false,
 			className,
-			defaultValue = ""
+			defaultValue = "",
+			message = {message:"",type:"info"}
 		} = this.props;
 		const {
 			mount = true
 		} = this.state;
+		this.message = (this.props.message || {message:"",type:"info"});
 		return mount
-			? (<TextField
-				floatingLabelText={label}
-				hintText={hint}
-				onChange={onChange}
-				fullWidth={true}
-				defaultValue={defaultValue}
-				name={id}
-				type={type}
-				ref={(ref) => this.input = ref}
-				required={required
-				? "required"
-				: ""}
-				autoCapitalize={type == 'email'
-				? 'none'
-				: false}
-				autoCorrect="off"/>)
+			? (<div>
+					<TextField
+						floatingLabelText={label}
+						hintText={hint}
+						onChange={onChange}
+						fullWidth={true}
+						defaultValue={defaultValue}
+						name={id}
+						type={type}
+						ref={(ref) => this.input = ref}
+						required={required
+						? "required"
+						: ""}
+						autoCapitalize={type == 'email'
+						? 'none'
+						: false}
+						autoCorrect="off"/>
+					<span className={['message', (this.message.type)].join(' ').trim()}>
+						{this.message.message}
+					</span>
+				</div>
+			)
 			: null;
 	}
 }
@@ -186,7 +198,7 @@ class SocialButtons extends Accounts.ui.SocialButtons {
 						);
 					})}
 				</div>
-			)
+			);
 		} else {
 			return null;
 		}
@@ -221,22 +233,22 @@ class FormMessage extends Accounts.ui.FormMessage {
       case 'warning':
         bodyStyle = {
           backgroundColor: yellow600
-        }
+        };
         break;
       case 'success':
         bodyStyle = {
           backgroundColor: green500
-        }
+        };
         break;
       case 'error':
         bodyStyle = {
           backgroundColor: red500
-        }
+        };
         break;
       case 'info':
         bodyStyle = {
           backgroundColor: lightBlue600
-        }
+        };
         break;
     }
 
