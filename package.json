@@ -1,9 +1,9 @@
 {
   "name": "accounts-material-ui",
-  "description": "Material-UI - Accounts UI for React in Meteor",
+  "description": "Material-UI - Accounts UI for React in Meteor, for sampleapp App",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Zetoff/accounts-material-ui"
+    "url": "https://github.com/ensemblebd/accounts-material-ui.git"
   },
   "keywords": [
     "react",
@@ -15,9 +15,9 @@
   "author": "Zetoff",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Zetoff/accounts-material-ui/issues"
+    "url": "https://github.com/ensemblebd/accounts-material-ui/issues"
   },
-  "homepage": "https://github.com/Zetoff/accounts-material-ui",
+  "homepage": "https://github.com/ensemblebd/accounts-material-ui",
   "dependencies": {
     "react": "^15.x",
     "react-dom": "^15.x",
