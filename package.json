@@ -10,7 +10,7 @@
     "meteor",
     "accounts",
     "tracker",
-		"material-ui"
+    "material-ui"
   ],
   "author": "Zetoff",
   "license": "MIT",
